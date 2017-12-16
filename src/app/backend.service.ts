@@ -34,6 +34,14 @@ export class BackendService {
     return this.http.delete(`${BackendService.BASE_URL}/outcomings/${id}`)
       .map((res: any) => res.json());
   }
+
+  getProduct(id: string) {
+    return this.http.get(`${BackendService.BASE_URL}/products/${id}`);
+  }
+
+  updateProduct(id: string, value: any) {
+    return this.http.put(`${BackendService.BASE_URL}/products/${id}`, value);
+  }
 }
 
 export const BACKEND_PROVIDERS: Array<any> = [
