@@ -1,11 +1,22 @@
+<!-- BREADCRUMBS -->
+<span>
+  <div class="ui basic label">
+    <a href="/add">
+      <i class="plus icon"></i>Додати накладну</a>
+  </div>
+</span>
+
 <div class="ui raised segment">
+  <div class="ui ribbon blue label large">
+    ₴{{ getPrice()}}
+  </div>
   <h2 class="ui header">Додати вихідну накладну</h2>
   <form [formGroup]="myForm" novalidate (ngSubmit)="save(myForm)" class="ui form">
     <div class="field">
       <label>Накладна №</label>
       <input type="text" class="form-control" formControlName="article">
-      <div *ngIf="!myForm.controls.article.valid" class="ui message negative">
-          Номер накладної є обов'язковим полем
+      <div *ngIf="!myForm.controls.article.valid" class="ui pointing red basic label">
+        Номер накладної є обов'язковим полем
       </div>
     </div>
 
@@ -13,8 +24,8 @@
     <div class="field">
       <label>Від</label>
       <input type="date" class="form-control" formControlName="date">
-      <div *ngIf="!myForm.controls.date.valid" class="ui message negative">
-          Дата укладання накладної є обов'язковою до заповнення
+      <div *ngIf="!myForm.controls.date.valid" class="ui pointing red basic label">
+        Дата укладання накладної є обов'язковою до заповнення
       </div>
     </div>
 
@@ -23,36 +34,38 @@
       <h5>Готова продукція</h5>
       <div *ngFor="let address of myForm.controls.items.controls; let i=index" class="ui raised segment">
         <div class="panel-heading">
-          <span *ngIf="myForm.controls.items.controls.length > 1" (click)="removeRaw(i)"><i class="trash icon red"></i> </span>
+          <span *ngIf="myForm.controls.items.controls.length > 1" (click)="removeRaw(i)">
+            <i class="trash icon red"></i>
+          </span>
         </div>
         <div class="panel-body" [formGroupName]="i">
 
           <div class="field">
             <label>Товар</label>
             <select name="itemsOptions" id="items" class="form-control" formControlName="raw">
-                <option  *ngFor="let value of itemsOptions" [value]="value.id+'-'+value.name" [selected]="value.selected == true">{{value.name}}</option>
+              <option *ngFor="let value of itemsOptions" [value]="value.id+'-'+value.name" [selected]="value.selected == true">{{value.name}}</option>
             </select>
 
-            <div [hidden]="myForm.controls.items.controls[i].controls.raw.valid" class="ui message negative">
-                Оберіть товар
+            <div *ngIf="!myForm.controls.items.controls[i].controls.raw.valid" class="ui pointing red basic label">
+              Оберіть товар
             </div>
           </div>
 
           <div class="field">
             <label>Кількість</label>
             <input type="text" class="form-control" formControlName="quantity">
-            <div [hidden]="myForm.controls.items.controls[i].controls.quantity.valid" class="ui message negative">
+            <div *ngIf="!myForm.controls.items.controls[i].controls.quantity.valid" class="ui pointing red basic label">
               Вкажіть кількість
-          </div>
+            </div>
           </div>
 
-          <div class="field">
+          <!-- <div class="field">
             <label>Ціна</label>
             <input type="text" class="form-control" formControlName="price">
-            <div [hidden]="myForm.controls.items.controls[i].controls.price.valid" class="ui message negative">
+            <div [hidden]="myForm.controls.items.controls[i].controls.price.valid" class="ui pointing red basic label">
               Вкажіть ціну за одиницю
-          </div>
-          </div>
+            </div>
+          </div> -->
 
         </div>
       </div>
@@ -66,4 +79,4 @@
     </div>
     <div class="clearfix"></div>
   </form>
-  </div>
+</div>

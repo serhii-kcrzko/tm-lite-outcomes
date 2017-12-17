@@ -4,8 +4,9 @@ import { FormGroup, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Http, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 
-import _forEach from 'lodash/foreach';
+import _forEach from 'lodash/forEach';
 import _locate from 'lodash/find';
+import _reduce from 'lodash/reduce';
 
 import { BackendService } from '../backend.service';
 
@@ -37,7 +38,7 @@ export class ItemAddComponent implements OnInit {
     return this._fb.group({
       raw: ['', Validators.required],
       quantity: ['', Validators.required],
-      price: ['', Validators.required],
+      price: [''],
       name: ['']
     });
   }
@@ -54,8 +55,8 @@ export class ItemAddComponent implements OnInit {
 
   save() {
     this.initializeNames();
-    this.http.post('http://localhost:9000/outcomings', this.myForm.value)
-      .subscribe((data) => this.myForm.reset());
+     this.db.putItem(this.myForm.value)
+       .subscribe((data) => this.myForm.reset());
     console.log(this.myForm.value);
   }
 
@@ -78,4 +79,11 @@ export class ItemAddComponent implements OnInit {
     });
   }
 
+  getPrice() {
+    const fullPrice = _reduce(this.myForm.value.items, (sum, item) => {
+      return sum + (+item.price * +item.quantity);
+    }, 0);
+
+    return fullPrice;
+  }
 }
