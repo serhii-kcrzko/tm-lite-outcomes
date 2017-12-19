@@ -12,7 +12,7 @@
     <tr>
       <th>Накладна</th>
       <th>Кількість товарів</th>
-      <th>Вартість</th>
+      <th>Укладач</th>
     </tr>
   </thead>
   <tbody>
@@ -21,7 +21,7 @@
         <a [routerLink]="['/show', item.id]"><b>{{ item.article }}</b></a>
       </td>
       <td>{{ item.items && item.items.length ? item.items.length : 0 }}</td>
-      <td>{{ calculatePrice(item.items) }}</td>
+      <td>Serhii Kocherezhko</td>
     </tr>
   </tbody>
 </table>
